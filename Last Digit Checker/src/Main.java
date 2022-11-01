@@ -18,10 +18,6 @@ public class Main {
         int num2RightDigit = num2 % 10;
         int num3RightDigit = num3 % 10;
 
-        if (num1RightDigit == num2RightDigit || num1RightDigit == num3RightDigit || num2RightDigit == num3RightDigit){
-            return true;
-        }
-
-        return false;
+        return num1RightDigit == num2RightDigit || num1RightDigit == num3RightDigit || num2RightDigit == num3RightDigit;
     }
 }
