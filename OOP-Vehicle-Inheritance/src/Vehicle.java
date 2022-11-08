@@ -1,6 +1,10 @@
 public class Vehicle {
     private int speed;
 
+    public int getSpeed() {
+        return speed;
+    }
+
     private String className = this.getClass().getCanonicalName();
 
     public Vehicle(int speed) {
