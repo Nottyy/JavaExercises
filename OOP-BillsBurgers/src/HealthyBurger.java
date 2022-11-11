@@ -7,7 +7,9 @@ public class HealthyBurger extends Hamburger{
         return this.price;
     }
 
-    public HealthyBurger(String meat) {
-        super("brownTypeRoll", meat);
+    public HealthyBurger(String meat, int maxAdditions) {
+        super("brown", meat, 6);
+        this.addAddition(new Chips("Crispy", 1.44));
+        this.addAddition(new Lettuce("Green", 0.22));
     }
 }

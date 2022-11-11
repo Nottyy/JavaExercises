@@ -1,17 +1,17 @@
-import java.util.ArrayList;
-
 public final class BurgerPrinter {
     private BurgerPrinter(){
 
     }
 
-    public static void printTotalBurgerPrice(ArrayList<Addition> additions, double totalBurgerPrice, double burgerPrice){
-        System.out.println("There are " + additions.size() + " additions. Total burger price is -> " + totalBurgerPrice);
+    public static void printTotalBurgerPrice(Hamburger burger){
+        System.out.println("There are " + burger.getAdditions().size() + " additions. Total price of "
+                + burger.getBreadRollType() + " " + burger.getClass().getSimpleName() + " with " + burger.getMeat() +
+                " is -> " + burger.calculateBurgerPrice());
 
-        for(Addition ad : additions){
+        for(Addition ad : burger.getAdditions()){
             System.out.println("Addition " + ad.getName() + " -> Price " + ad.getPrice());
         }
 
-        System.out.println("Burger price -> " + burgerPrice);
+        System.out.println("Burger price -> " + burger.getBasePrice());
     }
 }
