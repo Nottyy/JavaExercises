@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        int[] arr = new int[]{55, 7, 11, 21, 55, 2, 90, 52, 50, 4};
+        int[] arr = new int[]{55, 7, 11, 21, 55, 2, 90, 52, 50, 5000};
         printNumbers(arr);
         quickSort(arr, 0, arr.length - 1);
         System.out.println();
