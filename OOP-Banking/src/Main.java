@@ -1,11 +1,5 @@
 public class Main {
     public static void main(String[] args) {
-//        Customer customer1 = new Customer("Gosho", 1.55);
-//        Customer customer2 = new Customer("Gosho1", 2.55);
-//        Customer customer3 = new Customer("Gosho2", 3.55);
-//        Customer customer4 = new Customer("Gosho3", 4.55);
-//        Customer customer5 = new Customer("Gosho4", 5.55);
-//        Customer customer6 = new Customer("Gosho5", 6.55);
 
         Branch branch = new Branch("Serdika");
         branch.addCustomer("Gosho", 44.44);
