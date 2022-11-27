@@ -65,7 +65,16 @@ public class MyLinkedList implements Nodelist {
 
             if (result == 0){
                 if (currentItem.previous() != null){
-
+                    if (currentItem.next() != null){
+                        currentItem.previous().setNext(currentItem.next());
+                        currentItem.next().setPrevious(currentItem.previous());
+                    }
+                    else{
+                        currentItem.previous().setNext(null);
+                    }
+                }
+                else{
+                    this.root = currentItem.next();
                 }
 
                 return true;
