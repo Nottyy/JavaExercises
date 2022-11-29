@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class LeagueRepository {
-    List<ITeam> teams;
+public class LeagueRepository<T extends ITeam> {
+    private List<T> teams;
 
     public LeagueRepository(){
         this.teams = new ArrayList<>();
@@ -15,7 +15,7 @@ public class LeagueRepository {
         }
     }
 
-    public void addTeam(ITeam team){
+    public void addTeam(T team){
         this.teams.add(team);
     }
 
@@ -38,7 +38,7 @@ public class LeagueRepository {
         }
     }
 
-    private int calculateTeamStrength(List<T> players){
+    private int calculateTeamStrength(List<IPlayer> players){
         int strength = 0;
         for (IPlayer pl : players){
             strength += pl.getStrength();

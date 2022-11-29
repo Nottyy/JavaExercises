@@ -1,6 +1,6 @@
 import java.util.List;
 
-public interface ITeam<T extends IPlayer> {
+public interface ITeam<T> {
     String getName();
     void win();
     void lose();
