@@ -22,7 +22,12 @@ public class Main {
         everton.addPlayer(gugata);
 
         LeagueRepository league = new LeagueRepository();
+        league.addTeam(arsenal);
+        league.addTeam(everton);
         league.playGame(arsenal, everton);
+        league.playGame(arsenal, everton);
+        league.playGame(arsenal, everton);
+        league.printLeaderboard();
 
     }
 }

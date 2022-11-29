@@ -9,6 +9,7 @@ public class LeagueRepository {
     }
 
     public void printLeaderboard(){
+        int s = 5;
         for (ITeam team: this.teams){
             System.out.println("Team -> " + team.getName() + "; Wins -> " + team.getWins() + "; Losses ->" + team.getLosses()
             + "; Pts -> " + team.getWins() * 3 );
@@ -38,7 +39,7 @@ public class LeagueRepository {
         }
     }
 
-    private int calculateTeamStrength(List<T> players){
+    private int calculateTeamStrength(List<IPlayer> players){
         int strength = 0;
         for (IPlayer pl : players){
             strength += pl.getStrength();
