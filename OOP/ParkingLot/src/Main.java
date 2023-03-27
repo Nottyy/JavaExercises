@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import java.util.ArrayList;
 
 public class Main {
@@ -15,12 +15,5 @@ public class Main {
 
         ParkingLot parkinglot = new ParkingLot(list);
         System.out.println(parkinglot.park(car));
-
-
-=======
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
->>>>>>> origin/master
     }
 }
