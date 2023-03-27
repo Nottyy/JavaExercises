@@ -9,6 +9,7 @@ public class LeagueRepository<T extends ITeam> {
     }
 
     public void printLeaderboard(){
+        int s = 5;
         for (ITeam team: this.teams){
             System.out.println("Team -> " + team.getName() + "; Wins -> " + team.getWins() + "; Losses ->" + team.getLosses()
             + "; Pts -> " + team.getWins() * 3 );
