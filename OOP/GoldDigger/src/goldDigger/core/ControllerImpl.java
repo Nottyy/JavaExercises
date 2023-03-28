@@ -1,9 +1,43 @@
 package goldDigger.core;
 
+import goldDigger.common.ConstantMessages;
+import goldDigger.common.ExceptionMessages;
+import goldDigger.models.discoverer.Anthropologist;
+import goldDigger.models.discoverer.Archaeologist;
+import goldDigger.models.discoverer.Discoverer;
+import goldDigger.models.discoverer.Geologist;
+import goldDigger.repositories.DiscovererRepository;
+import goldDigger.repositories.SpotRepository;
+
 public class ControllerImpl implements Controller{
+    private DiscovererRepository discovererRepo;
+    private SpotRepository spotRepo;
+
+    public ControllerImpl(){
+        this.discovererRepo = new DiscovererRepository();
+        this.spotRepo = new SpotRepository();
+    }
+
     @Override
     public String addDiscoverer(String kind, String discovererName) {
-        return null;
+        Discoverer dsc;
+
+        switch (kind){
+            case "Anthropologist":
+                dsc = new Anthropologist(discovererName);
+                break;
+            case "Archaeologist":
+                dsc = new Archaeologist(discovererName);
+                break;
+            case "Geologist":
+                dsc = new Geologist(discovererName);
+                break;
+            default:
+                throw new IllegalArgumentException(ExceptionMessages.DISCOVERER_INVALID_KIND);
+        }
+
+        this.discovererRepo.add(dsc);
+        return String.format(ConstantMessages.DISCOVERER_ADDED, kind, discovererName);
     }
 
     @Override
