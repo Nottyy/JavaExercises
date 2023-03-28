@@ -14,6 +14,7 @@ import goldDigger.repositories.DiscovererRepository;
 import goldDigger.repositories.Repository;
 import goldDigger.repositories.SpotRepository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,10 +22,12 @@ public class ControllerImpl implements Controller {
     private final static int MIN_ENERGY_FOR_SPOT = 45;
     private Repository<Discoverer> discovererRepo;
     private Repository<Spot> spotRepo;
+    private int spotCount;
 
     public ControllerImpl() {
         this.discovererRepo = new DiscovererRepository();
         this.spotRepo = new SpotRepository();
+        this.spotCount = 0;
     }
 
     @Override
@@ -63,11 +66,10 @@ public class ControllerImpl implements Controller {
     @Override
     public String excludeDiscoverer(String discovererName) {
         Discoverer dsc = this.discovererRepo.byName(discovererName);
-        if (dsc != null){
+        if (dsc != null) {
             this.discovererRepo.remove(dsc);
             return String.format(ConstantMessages.DISCOVERER_EXCLUDE, discovererName);
-        }
-        else{
+        } else {
             throw new IllegalArgumentException(String.format(ExceptionMessages.DISCOVERER_DOES_NOT_EXIST, discovererName));
         }
     }
@@ -77,9 +79,9 @@ public class ControllerImpl implements Controller {
         Spot sp = this.spotRepo.byName(spotName);
         Operation op = new OperationImpl();
         List<Discoverer> dscs = this.discovererRepo.getCollection().stream()
-                .filter(d ->d.getEnergy() > MIN_ENERGY_FOR_SPOT)
+                .filter(d -> d.getEnergy() > MIN_ENERGY_FOR_SPOT)
                 .collect(Collectors.toList());
-        if (dscs.isEmpty()){
+        if (dscs.isEmpty()) {
             throw new IllegalArgumentException(ExceptionMessages.SPOT_DISCOVERERS_DOES_NOT_EXISTS);
         }
 
@@ -90,6 +92,24 @@ public class ControllerImpl implements Controller {
 
     @Override
     public String getStatistics() {
-        return null;
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format(ConstantMessages.FINAL_SPOT_INSPECT, this.spotCount));
+        sb.append(System.lineSeparator());
+        sb.append(ConstantMessages.FINAL_DISCOVERER_INFO);
+        sb.append(System.lineSeparator());
+
+        Collection<Discoverer> dscs = this.discovererRepo.getCollection();
+
+        for(Discoverer dsc: dscs){
+            sb.append(String.format(ConstantMessages.FINAL_DISCOVERER_NAME, dsc.getName()));
+            sb.append(System.lineSeparator());
+            sb.append(String.format(ConstantMessages.FINAL_DISCOVERER_ENERGY, dsc.getName()));
+            sb.append(System.lineSeparator());
+            sb.append(String.format(ConstantMessages.FINAL_DISCOVERER_MUSEUM_EXHIBITS,
+                    String.join(ConstantMessages.FINAL_DISCOVERER_MUSEUM_EXHIBITS_DELIMITER,
+                            dsc.getMuseum().getExhibits())));
+        }
+
+        return sb.toString();
     }
 }
