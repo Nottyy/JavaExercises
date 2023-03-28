@@ -2,6 +2,7 @@ package goldDigger.models.discoverer;
 
 import goldDigger.common.ExceptionMessages;
 import goldDigger.models.museum.Museum;
+import goldDigger.models.museum.baseMuseum;
 
 public class baseDiscoverer implements Discoverer {
     public static final int DIG_ENERGY = 15;
@@ -19,6 +20,7 @@ public class baseDiscoverer implements Discoverer {
             throw new IllegalArgumentException(ExceptionMessages.DISCOVERER_ENERGY_LESS_THAN_ZERO);
         }
         this.energy = energy;
+        this.museum = new baseMuseum();
     }
 
     @Override
