@@ -6,14 +6,16 @@ import goldDigger.models.discoverer.Anthropologist;
 import goldDigger.models.discoverer.Archaeologist;
 import goldDigger.models.discoverer.Discoverer;
 import goldDigger.models.discoverer.Geologist;
+import goldDigger.models.spot.Spot;
+import goldDigger.models.spot.SpotImpl;
 import goldDigger.repositories.DiscovererRepository;
 import goldDigger.repositories.SpotRepository;
 
-public class ControllerImpl implements Controller{
+public class ControllerImpl implements Controller {
     private DiscovererRepository discovererRepo;
     private SpotRepository spotRepo;
 
-    public ControllerImpl(){
+    public ControllerImpl() {
         this.discovererRepo = new DiscovererRepository();
         this.spotRepo = new SpotRepository();
     }
@@ -22,7 +24,7 @@ public class ControllerImpl implements Controller{
     public String addDiscoverer(String kind, String discovererName) {
         Discoverer dsc;
 
-        switch (kind){
+        switch (kind) {
             case "Anthropologist":
                 dsc = new Anthropologist(discovererName);
                 break;
@@ -42,7 +44,13 @@ public class ControllerImpl implements Controller{
 
     @Override
     public String addSpot(String spotName, String... exhibits) {
-        return null;
+        Spot spot = new SpotImpl(spotName);
+
+        for (String exb : exhibits) {
+            spot.getExhibits().add(exb);
+        }
+
+        return String.format(ConstantMessages.SPOT_ADDED, spotName);
     }
 
     @Override
