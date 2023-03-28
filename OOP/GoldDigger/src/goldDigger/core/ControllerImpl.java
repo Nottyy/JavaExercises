@@ -100,14 +100,20 @@ public class ControllerImpl implements Controller {
 
         Collection<Discoverer> dscs = this.discovererRepo.getCollection();
 
-        for(Discoverer dsc: dscs){
+        for (Discoverer dsc : dscs) {
+            sb.append(System.lineSeparator());
             sb.append(String.format(ConstantMessages.FINAL_DISCOVERER_NAME, dsc.getName()));
             sb.append(System.lineSeparator());
-            sb.append(String.format(ConstantMessages.FINAL_DISCOVERER_ENERGY, dsc.getName()));
+            sb.append(String.format(ConstantMessages.FINAL_DISCOVERER_ENERGY, dsc.getEnergy()));
             sb.append(System.lineSeparator());
-            sb.append(String.format(ConstantMessages.FINAL_DISCOVERER_MUSEUM_EXHIBITS,
-                    String.join(ConstantMessages.FINAL_DISCOVERER_MUSEUM_EXHIBITS_DELIMITER,
-                            dsc.getMuseum().getExhibits())));
+            if (dsc.getMuseum().getExhibits().size() > 0) {
+                sb.append(String.format(ConstantMessages.FINAL_DISCOVERER_MUSEUM_EXHIBITS,
+                        String.join(ConstantMessages.FINAL_DISCOVERER_MUSEUM_EXHIBITS_DELIMITER,
+                                dsc.getMuseum().getExhibits())));
+            }
+            else{
+                sb.append(String.format(ConstantMessages.FINAL_DISCOVERER_MUSEUM_EXHIBITS, "None"));
+            }
         }
 
         return sb.toString();
