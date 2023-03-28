@@ -55,7 +55,14 @@ public class ControllerImpl implements Controller {
 
     @Override
     public String excludeDiscoverer(String discovererName) {
-        return null;
+        Discoverer dsc = this.discovererRepo.byName(discovererName);
+        if (dsc != null){
+            this.discovererRepo.remove(dsc);
+            return String.format(ConstantMessages.DISCOVERER_EXCLUDE, discovererName);
+        }
+        else{
+            throw new IllegalArgumentException(String.format(ExceptionMessages.DISCOVERER_DOES_NOT_EXIST, discovererName));
+        }
     }
 
     @Override
