@@ -6,14 +6,21 @@ import goldDigger.models.discoverer.Anthropologist;
 import goldDigger.models.discoverer.Archaeologist;
 import goldDigger.models.discoverer.Discoverer;
 import goldDigger.models.discoverer.Geologist;
+import goldDigger.models.operation.Operation;
+import goldDigger.models.operation.OperationImpl;
 import goldDigger.models.spot.Spot;
 import goldDigger.models.spot.SpotImpl;
 import goldDigger.repositories.DiscovererRepository;
+import goldDigger.repositories.Repository;
 import goldDigger.repositories.SpotRepository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ControllerImpl implements Controller {
-    private DiscovererRepository discovererRepo;
-    private SpotRepository spotRepo;
+    private final static int MIN_ENERGY_FOR_SPOT = 45;
+    private Repository<Discoverer> discovererRepo;
+    private Repository<Spot> spotRepo;
 
     public ControllerImpl() {
         this.discovererRepo = new DiscovererRepository();
@@ -67,7 +74,18 @@ public class ControllerImpl implements Controller {
 
     @Override
     public String inspectSpot(String spotName) {
-        return null;
+        Spot sp = this.spotRepo.byName(spotName);
+        Operation op = new OperationImpl();
+        List<Discoverer> dscs = this.discovererRepo.getCollection().stream()
+                .filter(d ->d.getEnergy() > MIN_ENERGY_FOR_SPOT)
+                .collect(Collectors.toList());
+        if (dscs.isEmpty()){
+            throw new IllegalArgumentException(ExceptionMessages.SPOT_DISCOVERERS_DOES_NOT_EXISTS);
+        }
+
+        long excludedDiscoverers = dscs.stream().filter(x -> x.getEnergy() == 0).count();
+
+        return String.format(ConstantMessages.INSPECT_SPOT, spotName, excludedDiscoverers);
     }
 
     @Override

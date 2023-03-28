@@ -31,7 +31,7 @@ public class SpotRepository implements Repository{
     }
 
     @Override
-    public Object byName(String name) {
+    public Spot byName(String name) {
         return this.spots.get(name);
     }
 }

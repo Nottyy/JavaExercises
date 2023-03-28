@@ -15,7 +15,7 @@ public class DiscovererRepository implements Repository{
     }
 
     @Override
-    public Collection getCollection() {
+    public Collection<Discoverer> getCollection() {
         return Collections.unmodifiableCollection(this.discoverers.values());
     }
 
