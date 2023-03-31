@@ -7,10 +7,14 @@ import restaurant.entities.tables.interfaces.Table;
 import restaurant.repositories.interfaces.*;
 
 public class ControllerImpl implements Controller {
-
+    private Repository<HealthyFood> healthyFoodRepo;
+    private Repository<Table> tableRepo;
+    private Repository<Beverages> beveragesRepo;
 
     public ControllerImpl(HealthFoodRepository<HealthyFood> healthFoodRepository, BeverageRepository<Beverages> beverageRepository, TableRepository<Table> tableRepository) {
-
+        this.healthyFoodRepo = healthFoodRepository;
+        this.beveragesRepo = beverageRepository;
+        this.tableRepo = tableRepository;
     }
 
     @Override
