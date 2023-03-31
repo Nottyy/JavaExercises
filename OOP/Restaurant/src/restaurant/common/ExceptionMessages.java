@@ -12,6 +12,7 @@ public class ExceptionMessages {
     public static final String INVALID_BRAND = "Brand cannot be null or white space!";
 
     public static final String INVALID_TABLE_SIZE = "Size has to be greater than 0!";
+    public static final String INVALID_HEALTHY_FOOD_TYPE = "% type does not exist!";
 
     public static final String INVALID_NUMBER_OF_PEOPLE = "Cannot place zero or less people!";
 
