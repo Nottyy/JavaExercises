@@ -11,11 +11,13 @@ import restaurant.entities.healthyFoods.models.Salad;
 import restaurant.entities.healthyFoods.models.VeganBiscuits;
 import restaurant.entities.tables.interfaces.Table;
 import restaurant.common.enums.*;
+import restaurant.entities.tables.models.InGarden;
+import restaurant.entities.tables.models.Indoors;
 import restaurant.repositories.interfaces.*;
 
 public class ControllerImpl implements Controller {
     private HealthFoodRepository<HealthyFood> healthyFoodRepo;
-    private Repository<Table> tableRepo;
+    private TableRepository<Table> tableRepo;
     private BeverageRepository<Beverages> beveragesRepo;
 
     public ControllerImpl(HealthFoodRepository<HealthyFood> healthFoodRepository, BeverageRepository<Beverages> beverageRepository, TableRepository<Table> tableRepository) {
@@ -57,7 +59,7 @@ public class ControllerImpl implements Controller {
             throw new IllegalArgumentException(String.format(ExceptionMessages.INVALID_BEVERAGE_TYPE, type));
         }
 
-        if (this.beveragesRepo.beverageByName(name, brand) != null){
+        if (this.beveragesRepo.beverageByName(name, brand) != null) {
             throw new IllegalArgumentException(String.format(ExceptionMessages.BEVERAGE_EXIST, name));
         }
 
@@ -68,8 +70,23 @@ public class ControllerImpl implements Controller {
 
     @Override
     public String addTable(String type, int tableNumber, int capacity) {
-        //TODO:
-        return null;
+        Table tb;
+
+        if (type.equals(TableType.Indoors.name())) {
+            tb = new Indoors(tableNumber, capacity);
+        } else if (type.equals(TableType.InGarden.name())) {
+            tb = new InGarden(tableNumber, capacity);
+        } else {
+            throw new IllegalArgumentException(String.format(ExceptionMessages.INVALID_TABLE_TYPE, type));
+        }
+
+        if (this.tableRepo.byNumber(tableNumber) != null) {
+            throw new IllegalArgumentException(String.format(ExceptionMessages.TABLE_IS_ALREADY_ADDED, tableNumber));
+        }
+
+        this.tableRepo.add(tb);
+
+        return String.format(OutputMessages.TABLE_ADDED, tableNumber);
     }
 
     @Override
