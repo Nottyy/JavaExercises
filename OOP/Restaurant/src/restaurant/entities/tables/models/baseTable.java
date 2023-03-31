@@ -116,6 +116,16 @@ public abstract class baseTable implements Table {
 
     @Override
     public String tableInformation() {
-        return null;
+        StringBuilder sb = new StringBuilder();
+        sb.append("Table - " + this.numberOfPeople);
+        sb.append(System.lineSeparator());
+        sb.append("Size - " + this.size);
+        sb.append(System.lineSeparator());
+        sb.append("Type - " + this.getClass().getName());
+        sb.append(System.lineSeparator());
+        sb.append("All price - " + this.allPeople());
+        sb.append(System.lineSeparator());
+
+        return sb.toString();
     }
 }
