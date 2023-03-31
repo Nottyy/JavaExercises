@@ -3,6 +3,8 @@ package restaurant.core;
 import restaurant.common.ExceptionMessages;
 import restaurant.common.OutputMessages;
 import restaurant.core.interfaces.Controller;
+import restaurant.entities.drinks.models.Fresh;
+import restaurant.entities.drinks.models.Smoothie;
 import restaurant.entities.healthyFoods.interfaces.HealthyFood;
 import restaurant.entities.drinks.interfaces.Beverages;
 import restaurant.entities.healthyFoods.models.Salad;
@@ -14,7 +16,7 @@ import restaurant.repositories.interfaces.*;
 public class ControllerImpl implements Controller {
     private HealthFoodRepository<HealthyFood> healthyFoodRepo;
     private Repository<Table> tableRepo;
-    private Repository<Beverages> beveragesRepo;
+    private BeverageRepository<Beverages> beveragesRepo;
 
     public ControllerImpl(HealthFoodRepository<HealthyFood> healthFoodRepository, BeverageRepository<Beverages> beverageRepository, TableRepository<Table> tableRepository) {
         this.healthyFoodRepo = healthFoodRepository;
@@ -45,8 +47,23 @@ public class ControllerImpl implements Controller {
 
     @Override
     public String addBeverage(String type, int counter, String brand, String name) {
-        //TODO:
-        return null;
+        Beverages beverage;
+
+        if (type.equals(BeveragesType.Fresh.name())) {
+            beverage = new Fresh(name, counter, brand);
+        } else if (type.equals(BeveragesType.Smoothie.name())) {
+            beverage = new Smoothie(name, counter, brand);
+        } else {
+            throw new IllegalArgumentException(String.format(ExceptionMessages.INVALID_BEVERAGE_TYPE, type));
+        }
+
+        if (this.beveragesRepo.beverageByName(name, brand) != null){
+            throw new IllegalArgumentException(String.format(ExceptionMessages.BEVERAGE_EXIST, name));
+        }
+
+        this.beveragesRepo.add(beverage);
+
+        return String.format(OutputMessages.BEVERAGE_ADDED, name);
     }
 
     @Override

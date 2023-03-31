@@ -16,7 +16,7 @@ public class BeverageRepository<T> implements restaurant.repositories.interfaces
 
     @Override
     public Object beverageByName(String drinkName, String drinkBrand) {
-        return null;
+        return this.entities.get(drinkName + drinkBrand);
     }
 
     @Override
