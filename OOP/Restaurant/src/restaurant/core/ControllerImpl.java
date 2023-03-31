@@ -91,8 +91,18 @@ public class ControllerImpl implements Controller {
 
     @Override
     public String reserve(int numberOfPeople) {
-        //TODO:
-        return null;
+        Table tb = this.tableRepo.getAllEntities().stream()
+                .filter(x -> x.isReservedTable() == false && x.getSize() >= numberOfPeople)
+                .findFirst()
+                .orElse(null);
+        if (tb == null){
+            return String.format(OutputMessages.RESERVATION_NOT_POSSIBLE, numberOfPeople);
+        }
+        else{
+            tb.reserve(numberOfPeople);
+
+            return String.format(OutputMessages.TABLE_RESERVED, tb.getTableNumber(), numberOfPeople);
+        }
     }
 
     @Override
