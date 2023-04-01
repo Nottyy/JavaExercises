@@ -19,11 +19,13 @@ public class ControllerImpl implements Controller {
     private HealthFoodRepository<HealthyFood> healthyFoodRepo;
     private TableRepository<Table> tableRepo;
     private BeverageRepository<Beverages> beveragesRepo;
+    private int totalMoney;
 
     public ControllerImpl(HealthFoodRepository<HealthyFood> healthFoodRepository, BeverageRepository<Beverages> beverageRepository, TableRepository<Table> tableRepository) {
         this.healthyFoodRepo = healthFoodRepository;
         this.beveragesRepo = beverageRepository;
         this.tableRepo = tableRepository;
+        this.totalMoney = 0;
     }
 
     @Override
@@ -126,20 +128,40 @@ public class ControllerImpl implements Controller {
 
     @Override
     public String orderBeverage(int tableNumber, String name, String brand) {
-        //TODO:
-        return null;
+        Table tb = this.tableRepo.byNumber(tableNumber);
+
+        if (tb == null) {
+            return String.format(OutputMessages.WRONG_TABLE_NUMBER, tableNumber);
+        }
+
+        Beverages bv = this.beveragesRepo.beverageByName(name, brand);
+
+        if (bv == null) {
+            return String.format(OutputMessages.NON_EXISTENT_DRINK, name, brand);
+        }
+
+        tb.orderBeverages(bv);
+
+        return String.format(OutputMessages.BEVERAGE_ORDER_SUCCESSFUL, name + " " + brand, tableNumber);
     }
 
     @Override
     public String closedBill(int tableNumber) {
-        //TODO:
-        return null;
-    }
+        Table tb = this.tableRepo.byNumber(tableNumber);
 
+        if (tb == null) {
+            return String.format(OutputMessages.WRONG_TABLE_NUMBER, tableNumber);
+        }
+
+        double bill = tb.bill();
+        this.totalMoney += bill;
+        tb.clear();
+
+        return String.format(OutputMessages.BILL, bill, tableNumber);
+    }
 
     @Override
     public String totalMoney() {
-        //TODO:
-        return null;
+        return String.format(OutputMessages.TOTAL_MONEY, this.totalMoney);
     }
 }
