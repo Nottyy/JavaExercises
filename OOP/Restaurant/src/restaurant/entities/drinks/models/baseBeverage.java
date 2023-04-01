@@ -18,7 +18,7 @@ public abstract class baseBeverage implements Beverages {
 
     @Override
     public String getName() {
-        return null;
+        return this.name;
     }
 
     private void setName(String name) {
@@ -57,7 +57,7 @@ public abstract class baseBeverage implements Beverages {
 
     @Override
     public String getBrand() {
-        return null;
+        return this.brand;
     }
 
     private void setBrand(String brand) {

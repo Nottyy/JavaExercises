@@ -19,7 +19,7 @@ public class ControllerImpl implements Controller {
     private HealthFoodRepository<HealthyFood> healthyFoodRepo;
     private TableRepository<Table> tableRepo;
     private BeverageRepository<Beverages> beveragesRepo;
-    private int totalMoney;
+    private double totalMoney;
 
     public ControllerImpl(HealthFoodRepository<HealthyFood> healthFoodRepository, BeverageRepository<Beverages> beverageRepository, TableRepository<Table> tableRepository) {
         this.healthyFoodRepo = healthFoodRepository;
@@ -67,7 +67,7 @@ public class ControllerImpl implements Controller {
 
         this.beveragesRepo.add(beverage);
 
-        return String.format(OutputMessages.BEVERAGE_ADDED, name);
+        return String.format(OutputMessages.BEVERAGE_ADDED, beverage.getClass().getSimpleName(), brand);
     }
 
     @Override
@@ -157,7 +157,7 @@ public class ControllerImpl implements Controller {
         this.totalMoney += bill;
         tb.clear();
 
-        return String.format(OutputMessages.BILL, bill, tableNumber);
+        return String.format(OutputMessages.BILL, tableNumber, bill);
     }
 
     @Override
