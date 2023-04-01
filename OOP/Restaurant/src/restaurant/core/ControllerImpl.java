@@ -95,10 +95,10 @@ public class ControllerImpl implements Controller {
                 .filter(x -> x.isReservedTable() == false && x.getSize() >= numberOfPeople)
                 .findFirst()
                 .orElse(null);
-        if (tb == null){
+
+        if (tb == null) {
             return String.format(OutputMessages.RESERVATION_NOT_POSSIBLE, numberOfPeople);
-        }
-        else{
+        } else {
             tb.reserve(numberOfPeople);
 
             return String.format(OutputMessages.TABLE_RESERVED, tb.getTableNumber(), numberOfPeople);
@@ -107,8 +107,21 @@ public class ControllerImpl implements Controller {
 
     @Override
     public String orderHealthyFood(int tableNumber, String healthyFoodName) {
-        //TODO:
-        return null;
+        Table tb = this.tableRepo.byNumber(tableNumber);
+
+        if (tb == null) {
+            return String.format(OutputMessages.WRONG_TABLE_NUMBER, tableNumber);
+        }
+
+        HealthyFood hf = this.healthyFoodRepo.foodByName(healthyFoodName);
+
+        if (hf == null) {
+            return String.format(OutputMessages.NONE_EXISTENT_FOOD, healthyFoodName);
+        }
+
+        tb.orderHealthy(hf);
+
+        return String.format(OutputMessages.FOOD_ORDER_SUCCESSFUL, healthyFoodName);
     }
 
     @Override
