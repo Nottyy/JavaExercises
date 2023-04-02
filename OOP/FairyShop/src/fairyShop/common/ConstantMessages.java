@@ -10,4 +10,6 @@ public class ConstantMessages {
     public static final String PRESENT_DONE = "Present %s is %s. ";
 
     public static final String COUNT_BROKEN_INSTRUMENTS = "%d instrument/s have been broken while working on it!";
+
+    public static final String COUNT_PRESENTS_DONE = "%d presents are done!";
 }
