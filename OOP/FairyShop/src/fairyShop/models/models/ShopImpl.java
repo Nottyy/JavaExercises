@@ -18,6 +18,7 @@ public class ShopImpl implements Shop {
 
     @Override
     public void craft(Present present, Helper helper) {
+        this.brokenInstruments = 0;
         if (helper.canWork()) {
             for (Instrument instr : helper.getInstruments()) {
                 while (instr.isBroken() == false) {

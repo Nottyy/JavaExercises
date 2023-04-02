@@ -32,6 +32,7 @@ public class EngineImpl implements Engine {
                 result = e.getMessage();
             }
 
+
             System.out.println(result);
         }
     }
@@ -46,16 +47,22 @@ public class EngineImpl implements Engine {
         switch (command) {
             case AddHelper:
                 result = this.AddHelper(data);
+                break;
             case AddPresent:
                 result = this.AddPresent(data);
+                break;
             case AddInstrumentToHelper:
                 result = this.AddInstrumentToHelper(data);
+                break;
             case CraftPresent:
                 result = this.CraftPresent(data);
+                break;
             case Report:
                 result = this.controller.Report();
+                break;
             case Exit:
                 result = Command.Exit.name();
+                break;
         }
 
         return result;
@@ -66,7 +73,7 @@ public class EngineImpl implements Engine {
     }
 
     private String AddInstrumentToHelper(String[] data) {
-        return this.controller.AddHelper(data[0], data[1]);
+        return this.controller.AddInstrumentToHelper(data[0], Integer.parseInt(data[1]));
     }
 
     private String AddPresent(String[] data) {

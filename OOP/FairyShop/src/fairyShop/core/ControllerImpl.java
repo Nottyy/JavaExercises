@@ -83,8 +83,11 @@ public class ControllerImpl implements Controller {
             }
         }
 
-        return String.format(ConstantMessages.PRESENT_DONE, presentName,
-                pr.isDone() ? "done" : "not done", this.shop.getBrokenInstruments());
+        String msg = String.format(ConstantMessages.PRESENT_DONE, presentName, pr.isDone() ? "done" : "not done") +
+                String.format(ConstantMessages.COUNT_BROKEN_INSTRUMENTS,
+                        this.shop.getBrokenInstruments());
+
+        return msg;
     }
 
     @Override
